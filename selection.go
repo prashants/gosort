@@ -10,30 +10,32 @@ import (
 )
 
 var data list.List
+var sorted_data list.List
 
-func bubble_sort() {
-	last_element := data.Len()
-	last_element -= 1
-	for counter1 := last_element; counter1 >= 1; counter1 -= 1 {
-		/* single pass through the list and swap elements */
-		counter2 := counter1
-		for e := data.Front(); counter2 >= 1; e = e.Next() {
-			next := e.Next()
-			if e.Value.(int) >= next.Value.(int) {
-				/* swap current and next element */
-				temp := e.Value
-				e.Value = next.Value
-				next.Value = temp
+func selection_sort() {
+	for {
+		/* find the minimum element and move it to the sorted list */
+		min := data.Front()
+		for e := data.Front(); e != nil; e = e.Next() {
+			if e.Value.(int) < min.Value.(int) {
+				min = e
 			}
-			counter2 -= 1
+		}
+		/* move the minimum element to sorted list */
+		sorted_data.PushBack(min.Value.(int))
+		data.Remove(min)
+		/* if unsorted list is empty break out of the main loop */
+		if data.Len() <= 0 {
+			return
 		}
 	}
 }
 
 func main() {
-	fmt.Println("Welcome to Bubble Sort")
+	fmt.Println("Welcome to Selection Sort")
 
 	data.Init()
+	sorted_data.Init()
 
 	/* Read unsorted data from file and store it into list */
 	f, err := os.Open("./data1000.txt")
@@ -54,10 +56,10 @@ func main() {
 	err = f.Close();
 	fmt.Println("Read ", data.Len(), " integers")
 
-	bubble_sort()
+	selection_sort()
 
 	fmt.Println("Sorted List: ")
-	for e := data.Front(); e != nil; e = e.Next() {
+	for e := sorted_data.Front(); e != nil; e = e.Next() {
 		fmt.Println(e.Value)
 	}
 }
