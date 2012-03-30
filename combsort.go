@@ -1,3 +1,6 @@
+// This program implements Comb Sort
+// http://en.wikipedia.org/wiki/Comb_sort
+
 package main
 
 import (
@@ -42,7 +45,7 @@ func comb_sort() {
 }
 
 func main() {
-	fmt.Println("Welcome to Bubble Sort")
+	fmt.Println("Welcome to Comb Sort")
 
 	data.Init()
 
